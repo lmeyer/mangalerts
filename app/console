@@ -93,9 +93,9 @@ $console->register( 'refresh-rss' )
 
 				$app['mailer']->send($message);
 
-				$team->setLastCheck(time());
-				$team->save();
 			}
+			$team->setLastCheck(time());
+			$team->save();
 
 		}
 		if ($app['mailer.initialized']) {

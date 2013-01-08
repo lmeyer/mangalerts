@@ -2,6 +2,7 @@
 
 //@TODO check largeur select2
 //@TODO unique sur hash, code et email
+//@TODO Check a chaque fois si user existe sinon renvoyer vers 404
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
