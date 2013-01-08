@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="mangalerts" defaultIdMethod="native">
+    <table name="team" phpName="Team">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="name" type="varchar" size="255" required="true" />
+        <column name="feed" type="varchar" size="255" required="true" />
+        <column name="url" type="varchar" size="255" required="true" />
+        <column name="email" type="varchar" size="255" required="true" />
+        <column name="description" type="longvarchar" />
+        <column name="last_check" type="timestamp" required="true" />
+        <column name="status" type="integer" required="true" default="0"/>
+    </table>
+    <table name="user" phpName="User">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="email" type="varchar" size="255" required="true" />
+        <column name="code" type="varchar" size="255" required="true" />
+        <column name="hash" type="varchar" size="255" required="true" />
+    </table>
+    <table name="user_team" phpName="UserTeam" isCrossRef="true">
+        <column name="user_id" type="integer" required="true" primaryKey="true" />
+        <column name="team_id" type="integer" required="true" primaryKey="true" />
+        <foreign-key foreignTable="user" onDelete="CASCADE">
+            <reference local="user_id" foreign="id"/>
+        </foreign-key>
+        <foreign-key foreignTable="team" onDelete="CASCADE">
+            <reference local="team_id" foreign="id"/>
+        </foreign-key>
+    </table>
+</database>

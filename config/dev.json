@@ -1,0 +1,12 @@
+{
+    "debug": true,
+    "zilex.index" : "home",
+    "database.host" : "localhost",
+    "database.dbname" : "mangalerts",
+    "database.user" : "root",
+    "database.password" : "",
+    "mailer.host" : "smtp.free.fr",
+    "mailer.port" : "25",
+    "mailer.from" : "service@mangalerts.com",
+    "mailer.error.receiver" : "ludovic.meyer@gmail.com"
+}

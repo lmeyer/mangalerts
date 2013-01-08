@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+        <title>Mangalerts - Free mangas and animes email alerts</title>
+    {% endblock %}
+
+    {% block css %}
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="/css/style.css" rel="stylesheet">
+        <link href="/css/select2.css" rel="stylesheet">
+    {% endblock %}
+
+    {% block header_js %}
+    {% endblock %}
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+    {% block header %}
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=176724122396945";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        <div class="hero-unit">
+            <div class="container">
+                <h1>Mangalerts</h1>
+                <h3>Free mangas and animes email alerts</h3>
+            </div>
+        </div>
+    {% endblock %}
+    <div class="container">
+        {% if app.session.hasFlash('success') %}
+            <div class="alert alert-block alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>Success!</h4>
+                {{ app.session.flash('success') | raw  }}
+            </div>
+        {% endif %}
+        {% if app.session.hasFlash('info') %}
+            <div class="alert alert-block alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>Information!</h4>
+                {{ app.session.flash('info') | raw }}
+            </div>
+        {% endif %}
+
+
+        {% block content %}{% endblock %}
+    </div>
+    {% block footer %}
+        <div class="container">
+            <footer>
+                <div class="page-header"></div>
+                <div class="pull-right">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-via="pixelcookers" data-related="moalmeyer" data-hashtags="pixelcookers">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                    <div class="fb-like" style="top: -2px" data-href="http://www.mangalerts.net" data-send="true" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+                </div>
+                <p>&copy; <a href="http://www.pixel-cookers.com">Pixel Cookers</a> and <a href="http://www.ludovicmeyer.com">Ludovic Meyer</a> 2013</p>
+            </footer>
+        </div>
+    {% endblock %}
+    {% block footer_js %}
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/select2.min.js"></script>
+        <script src="/js/script.js"></script>
+    {% endblock %}
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-8889413-5']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</body>
+</html>

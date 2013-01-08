@@ -1,0 +1,109 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+use Desarrolla2\RSSClient\RSSClient;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+
+$app = require __DIR__.'/bootstrap.php';
+
+$console = $app['console'];
+
+$console->register( 'refresh-rss' )
+	->setDefinition( array(
+		new InputOption('test', '', InputOption::VALUE_NONE, 'Test mode'),
+	))
+	->setDescription('Crawl all RSS feed in order to find news')
+	->setHelp('Usage: <info>.app/console refresh-rss [--test]</info>')
+	->setCode(
+	function(InputInterface $input, OutputInterface $output) use ($app)
+	{
+		if ($input->getOption('test'))
+		{
+			$output->write("\n\tTest Mode Enabled\n\n");
+		}
+
+		$teams = TeamQuery::create()
+			//->filterByStatus(1)
+			->find();
+
+		$output->write( "Contacting external data sources ...\n");
+		$client = new RSSClient();
+		foreach($teams as $team) {
+			$output->writeln('<info>' . $team->getName() . '</info>');
+
+			$users = $team->getUsers();
+			if(!count($users)) {
+				$output->writeln('No users subscribed to this team');
+				continue;
+			}
+
+			$client->addFeed($team->getFeed(), 'feed'.$team->getId());
+			try{
+				@$posts = $client->fetch('feed'.$team->getId());
+			} catch (Exception $e) {
+				$output->writeln('Error when retrieving feed');
+				if ($app['mailer.error.receiver'] && '' != $app['mailer.error.receiver']) {
+					$content = $app['twig']->render('email/error.twig', array(
+						'team' => $team,
+						'error' => $e->getMessage()
+					));
+					$message = \Swift_Message::newInstance()
+						->setContentType('text/html')
+						->setSubject('[Mangalerts] Error - ' . $team->getName())
+						->setFrom(array($app['mailer.from']))
+						->setTo($app['mailer.error.receiver'])
+						->setBody($content);
+
+					$app['mailer']->send($message);
+				}
+				continue;
+			}
+
+			foreach ($posts as $post) {
+				if($team->getLastCheck() >= $post->getPubDate()){
+					$output->writeln('No more new post from this team');
+					break;
+				}
+				$output->writeln('<comment>New post from ' . $team->getName() . '</comment>');
+				$output->writeln($post->getTitle());
+				$output->writeln($post->getlink());
+				$output->writeln('');
+
+				$emails = array();
+				foreach($users as $user){
+					$emails[] = $user->getEmail();
+				}
+
+				$content = $app['twig']->render('email/alert.twig', array(
+					'post' => $post,
+					'team' => $team
+				));
+				$message = \Swift_Message::newInstance()
+					->setContentType('text/html')
+					->setSubject('[Mangalerts] New post from ' . $team->getName())
+					->setFrom(array($app['mailer.from']))
+					->setTo($emails)
+					->setBody($content);
+
+				$app['mailer']->send($message);
+
+				$team->setLastCheck(time());
+				$team->save();
+			}
+
+		}
+		if ($app['mailer.initialized']) {
+			$app['swiftmailer.spooltransport']->getSpool()->flushQueue($app['swiftmailer.transport']);
+		}
+	}
+);
+
+$console->run();
+
+?>

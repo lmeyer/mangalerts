@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Mangalert</title>
+</head>
+<body>
+    <h4>Error  when retrieving RSS feed for {{ team.name }} !</h4>
+    -----------------------------------------------------------------
+    <br />
+    <a href="{{ team.url }}">{{ team.url }}</a><br />
+    <a href="{{ team.feed }}">{{ team.feed }}</a>
+    <br />
+    -----------------------------------------------------------------
+    <br />
+    <br />
+    <pre>
+        {{ error }}
+    </pre>
+    <br />
+    <br />
+    You are receiving this e-mail message because you have registered to alerts at <a href="http://www.mangalerts.com">www.mangalerts.com</a>
+</body>
+</html>
