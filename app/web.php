@@ -187,8 +187,26 @@ $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) us
 	return $app['twig']->render('template/edit.twig', array(
 			'teams' => $teams,
 			'topten' => $topten,
+			'code' => $code,
+			'hash' => $hash,
 			'form' => $form->createView())
 	);
+});
+
+$app->get('/alert/{code}/{hash}/delete', function (Request $request, $code, $hash) use ($app) {
+	$user = UserQuery::create()
+		->filterByCode($code)
+		->_and()
+		->filterByHash($hash)
+		->findOne();
+	if ($user){
+		$app['session']->setFlash('success','Your alerts has been successfully deleted!');
+		$user->delete();
+	} else {
+		$app['session']->setFlash('error','Problem during deletion!');
+	}
+
+	return $app->redirect('/');
 });
 
 $app->match('/team/submit', function (Request $request) use ($app) {

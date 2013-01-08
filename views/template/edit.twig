@@ -22,6 +22,23 @@
                             {% endfor %}
                         </ol>
                     {% endif %}
+                    <a href="#delete-modal" class="btn btn-danger" data-toggle="modal">Delete</a>
+                </div>
+                <div class="span3">
+                    <div id="delete-modal" class="modal hide fade">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h3>Delete Alerts</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>You are about to delete your alerts, this procedure is irreversible.</p>
+                            <p>Do you want to proceed?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">No</a>
+                            <a href="/alert/{{ code }}/{{ hash }}/delete" class="btn btn-danger">Yes</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
