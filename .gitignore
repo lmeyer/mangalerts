@@ -3,7 +3,7 @@ vendor/
 composer.phar
 composer.lock
 config/prod.json
-src/mangalerts
+src/mangalerts/om
 config/classmap-mangalerts-conf.php
 config/mangalerts-conf.php
 sql/schema.sql

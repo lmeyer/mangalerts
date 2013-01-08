@@ -15,7 +15,7 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
 	'translator.messages' => array(),
 ));
 $app->register(new Propel\Silex\PropelServiceProvider(), array(
-	'propel.config_file' => __DIR__ . '/../config/Mangalerts-conf.php',
+	'propel.config_file' => __DIR__ . '/../config/mangalerts-conf.php',
 	'propel.model_path'  => __DIR__ . '/../src',
 ));
 $app->register(new Silex\Provider\SessionServiceProvider(array(

@@ -1,6 +1,6 @@
 {
     "require": {
-        "desarrolla2/rss-client": "dev-master@dev",
+        "desarrolla2/rss-client": "dev-master",
         "igorw/config-service-provider": "1.0.*@dev",
         "knplabs/console-service-provider": "dev-master",
         "propel/propel1": "1.6.*@dev",
