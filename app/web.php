@@ -91,8 +91,8 @@ $app->match('/', function (Request $request) use ($app) {
 			$user->save();
 
 			$content = $app['twig']->render('email/new.twig', array(
-				'code' => $code,
-				'hash' => $hash,
+				'code' => $user->getCode(),
+				'hash' => $user->getHash(),
 				'email' => $email,
 				'server' => $_SERVER['SERVER_NAME']
 			));
