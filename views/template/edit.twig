@@ -7,7 +7,7 @@
                 <h2>Edit</h2>
                 <div class="span3">
                     <h2>Alerts</h2>
-                    <form action="#" method="post">
+                    <form action="{{ path('alert_edit', {code: code, hash: hash}) }}" method="post">
                         {{ form_widget(form) }}
                         <br />
                         <input class="btn btn-inverse" type="submit" name="submit" />
@@ -36,7 +36,7 @@
                         </div>
                         <div class="modal-footer">
                             <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">No</a>
-                            <a href="/alert/{{ code }}/{{ hash }}/delete" class="btn btn-danger">Yes</a>
+                            <a href="{{ path('alert_delete', {code: code, hash: hash}) }}" class="btn btn-danger">Yes</a>
                         </div>
                     </div>
                 </div>

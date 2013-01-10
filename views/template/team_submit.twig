@@ -5,7 +5,7 @@
 
 {% block content %}
     <h2>Team Submit</h2>
-    <form action="#" method="post">
+    <form action="{{ path('team_submit') }}" method="post">
         {{ form_widget(form) }}
 
         <input class="btn btn-inverse" type="submit" name="submit" />

@@ -1,8 +1,6 @@
 <?php
 
 //@TODO check largeur select2
-//@TODO unique sur hash, code et email
-//@TODO Check a chaque fois si user existe sinon renvoyer vers 404
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -108,7 +106,7 @@ $app->match('/', function (Request $request) use ($app) {
 			$app['mailer']->send($message);
 
 			$app['session']->setFlash('success','Your alerts has been successfully created!');
-			$app->redirect('/');
+			return $app->redirect($app['url_generator']->generate('alert_edit', array('code' => $user->getCode(), 'hash' => $user->getHash())));
 		}
 	}
 
@@ -117,9 +115,20 @@ $app->match('/', function (Request $request) use ($app) {
 		'topten' => $topten,
 		'form' => $form->createView())
 	);
-});
+})
+->bind('homepage');
 
 $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) use ($app) {
+	$user = UserQuery::create()
+		->filterByCode($code)
+		->_and()
+		->filterByHash($hash)
+		->findOne();
+
+	if (!$user) {
+		$app->abort(404, 'Code and hash not recognized.');
+	}
+
 	$teams = TeamQuery::create()
 		->filterByStatus(1)
 		->find();
@@ -132,11 +141,6 @@ $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) us
 		$teams_array[$team->getId()] = $team->getName();
 	}
 
-	$user = UserQuery::create()
-		->filterByCode($code)
-		->_and()
-		->filterByHash($hash)
-		->findOne();
 	$user_teams = $user->getTeams();
 	$team_ids = array();
 	foreach ($user_teams as $user_team) {
@@ -183,7 +187,8 @@ $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) us
 			'hash' => $hash,
 			'form' => $form->createView())
 	);
-});
+})
+->bind('alert_edit');
 
 $app->get('/alert/{code}/{hash}/delete', function (Request $request, $code, $hash) use ($app) {
 	$user = UserQuery::create()
@@ -191,15 +196,18 @@ $app->get('/alert/{code}/{hash}/delete', function (Request $request, $code, $has
 		->_and()
 		->filterByHash($hash)
 		->findOne();
+
 	if ($user){
 		$app['session']->setFlash('success','Your alerts has been successfully deleted!');
 		$user->delete();
 	} else {
 		$app['session']->setFlash('error','Problem during deletion!');
+		$app->abort(404, 'Code and hash not recognized.');
 	}
 
-	return $app->redirect('/');
-});
+	return $app->redirect($app['url_generator']->generate('homepage'));
+})
+->bind('alert_delete');
 
 $app->match('/team/submit', function (Request $request) use ($app) {
 	$form = $app['form.factory']->createBuilder('form')
@@ -251,7 +259,6 @@ $app->match('/team/submit', function (Request $request) use ($app) {
 		->getForm();
 
 	if ('POST' == $request->getMethod()) {
-		$empty_form = clone($form);
 		$form->bind($request);
 
 		if ($form->isValid()) {
@@ -267,13 +274,14 @@ $app->match('/team/submit', function (Request $request) use ($app) {
 			$team->save();
 
 			$app['session']->setFlash('success','Your team has been successfully saved and will be available to users soon.');
-			$form = $empty_form;
+			return $app->redirect($app['url_generator']->generate('team_submit'));
 		}
 	}
 	return $app['twig']->render('template/team_submit.twig', array(
 			'form' => $form->createView())
 	);
-});
+})
+->bind('team_submit');
 
 
 

@@ -26,6 +26,7 @@ $app->register(new Knp\Provider\ConsoleServiceProvider(), array(
 	'console.version'           => '1.0.0',
 	'console.project_directory' => __DIR__.'/..'
 ));
+$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
