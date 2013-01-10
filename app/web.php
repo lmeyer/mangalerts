@@ -85,10 +85,10 @@ $app->match('/', function (Request $request) use ($app) {
 			$user = new User();
 			$user->setEmail($data['email']);
 
-			$propel_teams = TeamPeer::retrieveByPKs($data['teams']);
-			foreach ($propel_teams as $team) {
-				$user->addTeam($team);
-			}
+			$propel_teams = TeamQuery::create()
+				->findPks($data['teams']);
+
+			$user->setTeams($propel_teams);
 			$user->save();
 
 			$content = $app['twig']->render('email/new.twig', array(
@@ -107,7 +107,7 @@ $app->match('/', function (Request $request) use ($app) {
 
 			$app['mailer']->send($message);
 
-			$app['session']->setFlash('success','Nice !!!!');
+			$app['session']->setFlash('success','Your alerts has been successfully created!');
 			$app->redirect('/');
 		}
 	}
@@ -166,19 +166,10 @@ $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) us
 		if ($form->isValid()) {
 			$data = $form->getData();
 
-			$propel_teams = TeamPeer::retrieveByPKs($data['teams']);
-			$i = 0;
-			foreach($user_teams as $user_team) {
-				$i++;
-				var_dump($i, count($user_teams));
-				$user->removeTeam($user_team);
-			}
-			$i = 0;
-			foreach ($propel_teams as $team) {
-				$i++;
-				var_dump($i, count($propel_teams));
-				$user->addTeam($team);
-			}
+			$propel_teams = TeamQuery::create()
+				->findPks($data['teams']);
+
+			$user->setTeams($propel_teams);
 			$user->save();
 
 			$app['session']->setFlash('success','Your alerts has been successfully edited!');
