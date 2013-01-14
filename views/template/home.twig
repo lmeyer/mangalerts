@@ -18,7 +18,7 @@
                 <div class="page-header"></div>
             </div>
             <div class="step clearfix">
-                <i class="icon-envelope-alt icon-4x icon-muted pull-left"></i>  <h2>Receive emails</h2>
+                <i class="icon-envelope-alt icon-4x icon-muted pull-left"></i> <h2>Receive emails</h2>
                 <p class="lead">
                     Each time the team will post a new anime, you will receive an <a href="#email-example" data-toggle="modal">email</a>.
                 </p>
@@ -83,20 +83,12 @@
                                     {% endif %}
                                 </div>
                             </div>
-                            {% if btns[loop.index] is defined %}
-                                <div class="control-group">
-                                    <label class="control-label">{{ btns[loop.index]['label'] }}</label>
-                                    <div class="controls">
-                                        <input type="submit" class="{{ btns[loop.index]['class'] }}" value='{{ btns[loop.index]['value'] }}' >
-                                    </div>
-                                </div>
-                            {% endif %}
                         {% endfor %}
                         {{ form_rest(form) }}
                         <div class="control-group">
                             <label class="control-label"></label>
                             <div class="controls">
-                                <input class="btn btn-inverse" type="submit" name="submit" />
+                                <input class="btn btn-info" type="submit" name="submit" />
                             </div>
                         </div>
                     </form>

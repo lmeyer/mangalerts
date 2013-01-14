@@ -298,7 +298,8 @@ $app->get('/{page}', function ($page) use ($app) {
 		}
 	}
 })
-->value('page', $app['zilex.index']);
+->value('page', $app['zilex.index'])
+->bind('page');
 
 $app->error(function (\Exception $e, $code) use ($app) {
 	if($app['debug']) {

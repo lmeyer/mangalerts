@@ -10091,6 +10091,10 @@ body {
   background: #333333 url("../img/background.jpg") no-repeat center top fixed;
 }
 .container {
+  opacity: 9.45;
+  filter: alpha(opacity=945);
+  opacity: 9.45;
+  filter: alpha(opacity=945);
   background: whitesmoke;
   padding: 0px 20px;
 }
