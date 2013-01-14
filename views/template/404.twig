@@ -1,5 +1,23 @@
 {% extends "layout/base.twig" %}
 
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/js/jGravity-min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('body').live('click', function() {
+                $('body').jGravity({
+                    target: 'everything',
+                    ignoreClass: 'ignoreMe',
+                    weight: 25,
+                    depth: 5,
+                    drag: true
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
     <h2>404 Error</h2>
 {% endblock %}
