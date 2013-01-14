@@ -306,7 +306,7 @@ $app->error(function (\Exception $e, $code) use ($app) {
 	}
 	switch ($code) {
 		case 404:
-			return new Response( $app['twig']->render('content/404.twig'), 404);
+			return new Response( $app['twig']->render('template/404.twig'), 404);
 			break;
 		default:
 			$message = 'We are sorry, but something went terribly wrong.';
