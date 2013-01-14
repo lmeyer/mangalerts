@@ -24,23 +24,23 @@ $app->match('/', function (Request $request) use ($app) {
 	}
 
 	$form = $app['form.factory']->createBuilder('form')
+	->add('teams', 'choice', array(
+		'label'   => 'Add teams',
+		'multiple' => true,
+		'choices' => $teams_array,
+		'expanded' => false
+	))
 	->add('email', 'email', array(
-		'label' => 'Your Email',
+		'label' => 'Give your Email',
 		'required' => true,
 		'constraints' => array(
 			new Assert\NotBlank(array('message' => 'Don\'t leave blank')),
 			new Assert\Email(array('message' => 'Invalid email address'))
 		),
 		'attr' => array(
-			'placeholder' => 'email@exemple.com',
+			'placeholder' => 'email@example.com',
 			'help' => 'No spam !'
 		)
-	))
-	->add('teams', 'choice', array(
-		'label'   => 'The teams',
-		'multiple' => true,
-		'choices' => $teams_array,
-		'expanded' => false
 	))
 	->getForm();
 

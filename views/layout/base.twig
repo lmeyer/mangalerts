@@ -9,8 +9,6 @@
     {% endblock %}
 
     {% block css %}
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
         <link href="/css/style.css" rel="stylesheet">
         <link href="/css/select2.css" rel="stylesheet">
     {% endblock %}
@@ -22,23 +20,28 @@
     <![endif]-->
 </head>
 <body>
-    {% block header %}
-        <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=176724122396945";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-        <div class="hero-unit">
-            <div class="container">
-                <h1>Mangalerts</h1>
-                <h3>Free mangas and animes email alerts</h3>
+    <div class="container">
+        <div class="navbar navbar-inverse navbar-static-top">
+            <div class="navbar-inner">
+                <ul class="nav pull-right">
+                    <li><a href="{{ path('team_submit') }}"><i class="icon-bookmark"></i> Submit your Team</a></li>
+                </ul>
             </div>
         </div>
-    {% endblock %}
-    <div class="container">
+        {% block header %}
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=176724122396945";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+            <div class="hero-unit">
+                <h1><a href="{{ path('homepage') }}">Mangalerts</a></h1>
+                <h3>Free mangas and animes email alerts</h3>
+            </div>
+        {% endblock %}
         {% if app.session.hasFlash('success') %}
             <div class="alert alert-block alert-success">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -63,9 +66,7 @@
 
 
         {% block content %}{% endblock %}
-    </div>
-    {% block footer %}
-        <div class="container">
+        {% block footer %}
             <footer>
                 <div class="page-header"></div>
                 <div class="pull-right">
@@ -74,8 +75,8 @@
                 </div>
                 <p>&copy; <a href="http://www.pixel-cookers.com">Pixel Cookers</a> and <a href="http://www.ludovicmeyer.com">Ludovic Meyer</a> 2013</p>
             </footer>
-        </div>
-    {% endblock %}
+        {% endblock %}
+    </div>
     {% block footer_js %}
         <script src="/js/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>

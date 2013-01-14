@@ -1,0 +1,56 @@
+@import 'bootstrap/bootstrap.less';
+@import 'bootstrap/responsive.less';
+
+body {
+  background: #333333 url("../img/background.jpg") no-repeat center top fixed;
+}
+
+.container {
+  background: whitesmoke;
+  padding: 0px 20px;
+}
+
+.navbar {
+  margin: 0 -20px;
+}
+
+.hero-unit {
+  .border-radius(0);
+  background: url('../img/header.png') repeat left top;
+  color: white;
+  margin: 0 -20px 20px -20px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+
+  a {
+    color: white;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.icon-muted {
+  color: #cdcdcd;
+}
+
+.topten-team {
+  color: @black;
+  i {
+    color: @green;
+  }
+  .site {
+    font-size: 12px;
+  }
+}
+
+.help-block {
+	display: block;
+	margin-top: 5px !important;
+	margin-bottom: 0;
+	color: #999999;
+}
+
+.required::after {
+	content: ' *';
+	color: #b94a48;
+}

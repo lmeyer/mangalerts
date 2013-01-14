@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	$("#form_teams").select2({
-		placeholder: "Select teams"
+		placeholder: "Select teams",
+		width: '100%'
 	});
 	$(".topten-team").click(function(){
 		var values = $("#form_teams").val();
