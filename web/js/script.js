@@ -3,7 +3,8 @@ $(document).ready(function(){
 		placeholder: "Select teams",
 		width: '100%'
 	});
-	$(".topten-team").click(function(){
+	$(".topten-team").click(function(e){
+		e.preventDefault();
 		var values = $("#form_teams").val();
 		values = values + ',' + $(this).attr('attr-value');
 		var valuesArray = values.split(',');
