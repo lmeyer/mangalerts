@@ -15,19 +15,11 @@ $app = require __DIR__.'/bootstrap.php';
 $console = $app['console'];
 
 $console->register( 'refresh-rss' )
-	->setDefinition( array(
-		new InputOption('test', '', InputOption::VALUE_NONE, 'Test mode'),
-	))
 	->setDescription('Crawl all RSS feed in order to find news')
-	->setHelp('Usage: <info>.app/console refresh-rss [--test]</info>')
+	->setHelp('Usage: <info>.app/console refresh-rss</info>')
 	->setCode(
 	function(InputInterface $input, OutputInterface $output) use ($app)
 	{
-		if ($input->getOption('test'))
-		{
-			$output->write("\n\tTest Mode Enabled\n\n");
-		}
-
 		$teams = TeamQuery::create()
 			->filterByStatus(1)
 			->find();
@@ -77,11 +69,6 @@ $console->register( 'refresh-rss' )
 				$output->writeln('');
 				$to_update = true;
 
-				$emails = array();
-				foreach($users as $user){
-					$emails[] = $user->getEmail();
-				}
-
 				$content = $app['twig']->render('email/alert.twig', array(
 					'post' => $post,
 					'team' => $team
@@ -90,10 +77,13 @@ $console->register( 'refresh-rss' )
 					->setContentType('text/html')
 					->setSubject('[Mangalerts] New post from ' . $team->getName())
 					->setFrom(array($app['mailer.from']))
-					->setTo($emails)
 					->setBody($content);
+				
+				foreach($users as $user){
+					$message->setTo($user->getEmail());
+					$app['mailer']->send($message);
+				}
 
-				$app['mailer']->send($message);
 
 			}
 			if ($to_update) {
