@@ -2,7 +2,8 @@
 
 //@TODO Don't redirect to edit page when alerts saved
 //@TODO Add status to User (default : 0)
-//@TODO Send email to admin when team added
+//@TODO Add hash to team
+//@TODO Ability to validate team from email
 //@TODO Find a way to do fixtures
 //@TODO Associate mangas/animes to team
 //@TODO Search via associated animes
@@ -73,6 +74,13 @@ $app->match('/', function (Request $request) use ($app) {
 
 				$message = \Swift_Message::newInstance()
 					->setContentType('text/html')
+					->setSubject('[Mangalerts] Your alerts link')
+					->setFrom(array($app['mailer.from']))
+					->setTo(array($email))
+					->setBody($content);
+
+				$app['mailer']->send($message);$message = \Swift_Message::newInstance()
+    				->setContentType('text/html')
 					->setSubject('[Mangalerts] Your alerts link')
 					->setFrom(array($app['mailer.from']))
 					->setTo(array($email))
@@ -280,6 +288,20 @@ $app->match('/team/submit', function (Request $request) use ($app) {
 			$team->setDescription($data['description']);
 			$team->setLastCheck(time());
 			$team->save();
+            
+            $content = $app['twig']->render('email/new_team.twig', array(
+    			'team' => $team,
+				'server' => $_SERVER['SERVER_NAME']
+			));
+            
+            $message = \Swift_Message::newInstance()
+    				->setContentType('text/html')
+					->setSubject('[Mangalerts] New team added')
+					->setFrom(array($app['mailer.from']))
+					->setTo(array($app['mailer.error.receiver']))
+					->setBody($content);
+
+				$app['mailer']->send($message);
 
 			$app['session']->setFlash('success','Your team has been successfully saved and will be available to users soon.');
 			return $app->redirect($app['url_generator']->generate('team_submit'));
