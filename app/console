@@ -78,7 +78,7 @@ $console->register( 'refresh-rss' )
 					->setSubject('[Mangalerts] New post from ' . $team->getName())
 					->setFrom(array($app['mailer.from']))
 					->setBody($content);
-				
+
 				foreach($users as $user){
 					$message->setTo($user->getEmail());
 					$app['mailer']->send($message);

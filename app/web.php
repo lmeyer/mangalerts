@@ -1,6 +1,14 @@
 <?php
 
-//@TODO check largeur select2
+//@TODO Don't redirect to edit page when alerts saved
+//@TODO Add status to User (default : 0)
+//@TODO Send email to admin when team added
+//@TODO Find a way to do fixtures
+//@TODO Associate mangas/animes to team
+//@TODO Search via associated animes
+//@TODO Search via description (in select2)
+//@TODO Send Validation Email
+//@TODO Action to validation account
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
