@@ -45,6 +45,7 @@ class TeamTableMap extends TableMap
         $this->addColumn('email', 'Email', 'VARCHAR', true, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
         $this->addColumn('last_check', 'LastCheck', 'TIMESTAMP', true, null, null);
+        $this->addColumn('hash', 'Hash', 'VARCHAR', true, 255, null);
         $this->addColumn('status', 'Status', 'INTEGER', true, null, 0);
         // validators
     } // initialize()

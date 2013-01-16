@@ -29,7 +29,9 @@ $console->register( 'refresh-rss' )
 		foreach($teams as $team) {
 			$output->writeln('<info>' . $team->getName() . '</info>');
 
-			$users = $team->getUsers();
+			$user_query = UserQuery::create()
+				->filterByStatus(1);
+			$users = $team->getUsers($user_query);
 			if(!count($users)) {
 				$output->writeln('No users subscribed to this team');
 				continue;
@@ -95,6 +97,61 @@ $console->register( 'refresh-rss' )
 		if ($app['mailer.initialized']) {
 			$app['swiftmailer.spooltransport']->getSpool()->flushQueue($app['swiftmailer.transport']);
 		}
+	}
+);
+
+$console->register( 'data-load' )
+	->setDescription('Import fixtures data for developpement environment')
+	->setHelp('Usage: <info>.app/console data-load</info>')
+	->setCode(
+	function(InputInterface $input, OutputInterface $output) use ($app)
+	{
+		$output->writeln( "Importing fixtures data ...");
+
+		$teams = array(
+			array(
+				'name' => "FlyHigh Fansub",
+				'feed' => "http://flyhigh-fansub.over-blog.com/rss-articles.xml",
+				'url'  => "http://flyhigh-fansub.over-blog.com/",
+				'email' => $app['mailer.error.receiver'],
+				'status' => 1
+			),
+			array(
+				'name' => "Fansub Resistance",
+				'feed' => "http://www.fansub-resistance.info/rss.html",
+				'url'  => "http://www.fansub-resistance.info/",
+				'email' => $app['mailer.error.receiver'],
+				'status' => 1
+			),
+			array(
+				'name' => "Mirage-Team",
+				'feed' => "http://www.mirage-team.com/rss.php?p=news",
+				'url'  => "http://www.mirage-team.com",
+				'email' => $app['mailer.error.receiver'],
+				'status' => 1
+			),
+			array(
+				'name' => "Shiranai Fansub Team",
+				'feed' => "http://www.shiranai-fansub.fr/feed/",
+				'url'  => "http://www.shiranai-fansub.fr/",
+				'email' => $app['mailer.error.receiver'],
+				'status' => 1
+			),
+		);
+
+		$i = 0;
+		foreach($teams as $data) {
+			$team = new Team();
+			$team->setName($data['name']);
+			$team->setEmail($data['email']);
+			$team->setUrl($data['url']);
+			$team->setFeed($data['feed']);
+			$team->setStatus(1);
+			$team->save();
+			$i++;
+		}
+
+		$output->writeln( $i . " teams imported ...");
 	}
 );
 

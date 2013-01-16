@@ -15,4 +15,28 @@
  */
 class Team extends BaseTeam
 {
+	public function save(PropelPDO $con = null)
+	{
+		if ($this->isNew()) {
+			do {
+				$hash = MangalertsFunctions::generateKey(30);
+
+				$duplicate = TeamQuery::create()
+					->filterByHash($hash)
+					->find();
+
+			} while (0 != count($duplicate));
+
+			$this->setHash($hash);
+			$this->setLastCheck(time());
+		}
+		parent::save($con);
+	}
+
+	public function activate($save) {
+		$this->setStatus(1);
+		if ($save) {
+			$this->save();
+		}
+	}
 }

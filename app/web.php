@@ -1,14 +1,8 @@
 <?php
 
-//@TODO Don't redirect to edit page when alerts saved
-//@TODO Add status to User (default : 0)
-//@TODO Ability to validate team from email
-//@TODO Find a way to do fixtures
 //@TODO Associate mangas/animes to team
 //@TODO Search via associated animes
 //@TODO Search via description (in select2)
-//@TODO Send Validation Email
-//@TODO Action to validation account
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -120,8 +114,8 @@ $app->match('/', function (Request $request) use ($app) {
 
 			$app['mailer']->send($message);
 
-			$app['session']->setFlash('success','Your alerts has been successfully created!');
-			return $app->redirect($app['url_generator']->generate('alert_edit', array('code' => $user->getCode(), 'hash' => $user->getHash())));
+			$app['session']->setFlash('success','Your alerts has been successfully created! You will receive an email shortly to <strong>activate your alerts</strong>.');
+			return $app->redirect($app['url_generator']->generate('homepage'));
 		}
 	}
 
@@ -285,7 +279,6 @@ $app->match('/team/submit', function (Request $request) use ($app) {
 			$team->setUrl($data['url']);
 			$team->setFeed($data['feed']);
 			$team->setDescription($data['description']);
-			$team->setLastCheck(time());
 			$team->save();
             
             $content = $app['twig']->render('email/new_team.twig', array(
@@ -312,6 +305,18 @@ $app->match('/team/submit', function (Request $request) use ($app) {
 })
 ->bind('team_submit');
 
+$app->match('/team/activate/{hash}', function (Request $request, $hash) use ($app) {
+	$team = TeamQuery::create()
+		->filterByHash($hash)
+		->findOne();
+	if(!$team) {
+		$app->abort(404, 'Team not recognized.');
+	}
+	$team->activate(true);
+	$app['session']->setFlash('success','The team has been activated.');
+	return $app->redirect($app['url_generator']->generate('homepage'));
+})
+->bind('team_activate');
 
 
 $app->get('/{page}', function ($page) use ($app) {

@@ -42,6 +42,7 @@ class UserTableMap extends TableMap
         $this->addColumn('email', 'Email', 'VARCHAR', true, 255, null);
         $this->addColumn('code', 'Code', 'VARCHAR', true, 255, null);
         $this->addColumn('hash', 'Hash', 'VARCHAR', true, 255, null);
+        $this->addColumn('status', 'Status', 'INTEGER', true, null, 0);
         // validators
     } // initialize()
 

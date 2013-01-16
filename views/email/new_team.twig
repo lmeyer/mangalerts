@@ -10,11 +10,13 @@
         <li>{{ team.name }}</li>
         <li>{{ team.email }}</li>
         <li><a href="{{ team.url }}">{{ team.url }}</a></li>
-        <li><a href="{{ team.ufeedrl }}">{{ team.feed }}</a></li>
+        <li><a href="{{ team.feed }}">{{ team.feed }}</a></li>
         <li>{{ team.description }}</li>
     </ul>
-    <br />
     -----------------------------------------------------------------
+    <br />
+    <br />
+    Activate this team by clicking the following link <a href="http://{{ server }}/team/activate/{{ team.hash }}">http://{{ server }}/team/activate/{{ team.hash }}</a>
     <br />
     <br />
     You are receiving this e-mail message because you have registered to alerts at <a href="http://www.mangalerts.com">www.mangalerts.com</a>
