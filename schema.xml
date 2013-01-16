@@ -9,6 +9,7 @@
         <column name="description" type="longvarchar" />
         <column name="last_check" type="timestamp" required="true" />
         <column name="status" type="integer" required="true" default="0"/>
+        <column name="hash" type="varchar" size="255" required="true" />
     </table>
     <table name="user" phpName="User">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
@@ -19,6 +20,7 @@
     <table name="user_team" phpName="UserTeam" isCrossRef="true">
         <column name="user_id" type="integer" required="true" primaryKey="true" />
         <column name="team_id" type="integer" required="true" primaryKey="true" />
+        <column name="status" type="integer" required="true" default="0"/>
         <foreign-key foreignTable="user" onDelete="CASCADE">
             <reference local="user_id" foreign="id"/>
         </foreign-key>

@@ -2,7 +2,6 @@
 
 //@TODO Don't redirect to edit page when alerts saved
 //@TODO Add status to User (default : 0)
-//@TODO Add hash to team
 //@TODO Ability to validate team from email
 //@TODO Find a way to do fixtures
 //@TODO Associate mangas/animes to team
