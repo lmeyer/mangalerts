@@ -3,6 +3,7 @@
 //@TODO Associate mangas/animes to team
 //@TODO Search via associated animes
 //@TODO Search via description (in select2)
+//@TODO Handle better remember email
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

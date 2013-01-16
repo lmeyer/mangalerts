@@ -87,27 +87,5 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <div id="email-example" class="modal hide fade">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>Email example</h3>
-        </div>
-        <div class="modal-body">
-            <h4>New post from Mirage-Team !</h4>
-            A new post named <a target="_blank" href="http://www.mirage-team.com/Fansub-Actualite-news=804">One Piece - AOV Special Arlong Arc</a> as been published. You can go to read it by clicking on the link below.
-            <br />
-            <br />
-            -----------------------------------------------------------------
-            <br />
-            <a target="_blank" href="http://www.mirage-team.com/Fansub-Actualite-news=804">http://www.mirage-team.com/Fansub-Actualite-news=804</a>
-            <br />
-            -----------------------------------------------------------------
-            <br />
-            <br />
-            You are receiving this e-mail message because you have registered to alerts at <a href="#">www.mangalerts.com</a>
-        </div>
-        <div class="modal-footer">
-            <a href="#" data-dismiss="modal" aria-hidden="true" class="btn">Close</a>
-        </div>
-    </div>
+    {% include "block/email_example.twig" %}
 {% endblock %}

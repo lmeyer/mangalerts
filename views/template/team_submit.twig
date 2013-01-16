@@ -1,57 +1,87 @@
 {% extends "layout/base.twig" %}
 
-{% block footer_js %}
-{% endblock %}
-
 {% block content %}
-    <h2><i class="icon-bookmark"></i> Team Submit</h2>
-    <form action="{{ path('team_submit') }}" method="post" class="form-horizontal">
-        {{ form_errors(form) }}
-        {% for key,field in form if 'hidden' not in field.all['block_prefixes'] %}
-            <div class="control-group {% if field.vars.errors|length > 0 %}error{% endif %}">
-                {{ form_label(field, null, { 'label_attr': {'class': 'control-label'}}) }}
-                <div class="controls">
-                    {% set attr = field.all['attr'] %}
+    <div class="row">
+        <div class="span5">
+            <h2><i class="icon-bookmark"></i> Team Submit</h2>
+            <form action="{{ path('team_submit') }}" method="post" class="form-horizontal">
+                {{ form_errors(form) }}
+                {% for key,field in form if 'hidden' not in field.all['block_prefixes'] %}
+                    <div class="control-group {% if field.vars.errors|length > 0 %}error{% endif %}">
+                        {{ form_label(field, null, { 'label_attr': {'class': 'control-label'}}) }}
+                        <div class="controls">
+                            {% set attr = field.all['attr'] %}
 
-                    {% if (attr['add-on'] is defined) and (attr['add-on'] != '') %}
-                    <div class="input-{{ attr['add-on'] }}">
-                        {% if (attr['add-on'] == 'prepend') and (attr['add-on-text'] != '') %}
-                            <span class="add-on">{{ attr['add-on-text'] }}</span>
-                        {% endif %}
-                        {% endif %}
+                            {% if (attr['add-on'] is defined) and (attr['add-on'] != '') %}
+                            <div class="input-{{ attr['add-on'] }}">
+                                {% if (attr['add-on'] == 'prepend') and (attr['add-on-text'] != '') %}
+                                    <span class="add-on">{{ attr['add-on-text'] }}</span>
+                                {% endif %}
+                                {% endif %}
 
-                        {{ form_widget(field) }}
+                                {{ form_widget(field) }}
 
-                        {% if (attr['add-on'] is defined) and (attr['add-on-text'] != '') %}
-                            {% if attr['add-on'] == 'append' %}
-                                <span class="add-on">{{ attr['add-on-text'] }}</span>
+                                {% if (attr['add-on'] is defined) and (attr['add-on-text'] != '') %}
+                                    {% if attr['add-on'] == 'append' %}
+                                        <span class="add-on">{{ attr['add-on-text'] }}</span>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if (attr['add-on'] is defined) and (attr['add-on'] != '') %}
+                            </div>
                             {% endif %}
-                        {% endif %}
 
-                        {% if (attr['add-on'] is defined) and (attr['add-on'] != '') %}
+                            {% if attr['data-help'] is defined and attr['data-help'] is not empty %}
+                                <p class="help-block">{{ attr['data-help'] }}</p>
+                            {% endif %}
+                        </div>
                     </div>
+                    {% if btns[loop.index] is defined %}
+                        <div class="control-group">
+                            <label class="control-label">{{ btns[loop.index]['label'] }}</label>
+                            <div class="controls">
+                                <input type="submit" class="{{ btns[loop.index]['class'] }}" value='{{ btns[loop.index]['value'] }}' >
+                            </div>
+                        </div>
                     {% endif %}
-
-                    {% if attr['data-help'] is defined and attr['data-help'] is not empty %}
-                        <p class="help-block">{{ attr['data-help'] }}</p>
-                    {% endif %}
-                </div>
-            </div>
-            {% if btns[loop.index] is defined %}
+                {% endfor %}
+                {{ form_rest(form) }}
                 <div class="control-group">
-                    <label class="control-label">{{ btns[loop.index]['label'] }}</label>
+                    <label class="control-label"></label>
                     <div class="controls">
-                        <input type="submit" class="{{ btns[loop.index]['class'] }}" value='{{ btns[loop.index]['value'] }}' >
+                        <input class="btn btn-inverse" type="submit" name="submit" />
                     </div>
                 </div>
-            {% endif %}
-        {% endfor %}
-        {{ form_rest(form) }}
-        <div class="control-group">
-            <label class="control-label"></label>
-            <div class="controls">
-                <input class="btn btn-inverse" type="submit" name="submit" />
+            </form>
+        </div>
+        <div class="span7">
+            <div class="step clearfix">
+                <i class="icon-magic icon-4x icon-muted pull-left"></i> <h2>How it works</h2>
+                <p class="lead">
+                    We check regulary your rss feed to find new anime/manga release on your website. If a user subscribed to your team, he will receive an <a href="#email-example" data-toggle="modal">email</a>
+                </p>
+                <div class="page-header"></div>
+            </div>
+            <div class="step clearfix">
+                <i class="icon-heart icon-4x icon-muted pull-left"></i> <h2>Why add my team ?</h2>
+                <p class="lead">
+                    Because we just help your fans, we just send an email with a link to the freshly created post!
+                    <br />
+                    <small>We don't intend to take your visits (visitors are redirected to your website when they click in the mail). We don't make money with that (no plans, no ads).</small>
+                </p>
+                <div class="page-header"></div>
+            </div>
+            <div class="step clearfix">
+                <i class="icon-thumbs-down icon-4x icon-muted pull-left"></i> <h2>I don't want to be on mangalerts</h2>
+                <p class="lead">
+                    You are a fansub team leader, and you want to remove your website from mangalerts. What a shame :-(, but it's ok... Please use this <a href="{{ path('page', {page: 'contact'}) }}">contact form</a>.
+                </p>
             </div>
         </div>
-    </form>
+    </div>
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    {% include "block/email_example.twig" %}
 {% endblock %}
