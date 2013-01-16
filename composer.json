@@ -14,5 +14,6 @@
         "symfony/locale": "2.1.*",
         "symfony/config": "2.1.*",
         "twig/twig": ">=1.8,<2.0-dev"
-    }
+    },
+    "minimum-stability": "dev"
 }
