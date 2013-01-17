@@ -35,4 +35,11 @@ class User extends BaseUser
 		}
 		parent::save($con);
 	}
+
+	public function activate($save) {
+		$this->setStatus(1);
+		if ($save) {
+			$this->save();
+		}
+	}
 }

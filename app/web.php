@@ -128,11 +128,53 @@ $app->match('/', function (Request $request) use ($app) {
 })
 ->bind('homepage');
 
+$app->get('/alert/{code}/{hash}/delete', function (Request $request, $code, $hash) use ($app) {
+	$user = UserQuery::create()
+		->filterByCode($code)
+		->_and()
+		->filterByHash($hash)
+		->_and()
+		->filterByStatus(1)
+		->findOne();
+
+	if ($user){
+		$app['session']->setFlash('success','Your alerts has been successfully deleted!');
+		$user->delete();
+	} else {
+		$app['session']->setFlash('error','Problem during deletion!');
+		$app->abort(404, 'Code and hash not recognized.');
+	}
+
+	return $app->redirect($app['url_generator']->generate('homepage'));
+})
+->bind('alert_delete');
+
+$app->get('/alert/{code}/{hash}/activate', function (Request $request, $code, $hash) use ($app) {
+	$user = UserQuery::create()
+		->filterByCode($code)
+		->_and()
+		->filterByHash($hash)
+		->findOne();
+
+	if ($user){
+		$app['session']->setFlash('success','Your alerts has been successfully activated!');
+		$user->activate(true);
+	} else {
+		$app['session']->setFlash('error','Problem during activation!');
+		$app->abort(404, 'Code and hash not recognized.');
+	}
+
+	return $app->redirect($app['url_generator']->generate('alert_edit', array('code' => $code, 'hash' => $hash)));
+})
+->bind('alert_delete');
+
 $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) use ($app) {
 	$user = UserQuery::create()
 		->filterByCode($code)
 		->_and()
 		->filterByHash($hash)
+		->_and()
+		->filterByStatus(1)
 		->findOne();
 
 	if (!$user) {
@@ -199,25 +241,6 @@ $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) us
 	);
 })
 ->bind('alert_edit');
-
-$app->get('/alert/{code}/{hash}/delete', function (Request $request, $code, $hash) use ($app) {
-	$user = UserQuery::create()
-		->filterByCode($code)
-		->_and()
-		->filterByHash($hash)
-		->findOne();
-
-	if ($user){
-		$app['session']->setFlash('success','Your alerts has been successfully deleted!');
-		$user->delete();
-	} else {
-		$app['session']->setFlash('error','Problem during deletion!');
-		$app->abort(404, 'Code and hash not recognized.');
-	}
-
-	return $app->redirect($app['url_generator']->generate('homepage'));
-})
-->bind('alert_delete');
 
 $app->match('/team/submit', function (Request $request) use ($app) {
 	$form = $app['form.factory']->createBuilder('form')
