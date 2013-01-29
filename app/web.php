@@ -14,6 +14,7 @@ $app = require __DIR__.'/bootstrap.php';
 // Controlers
 
 $app->match('/', function (Request $request) use ($app) {
+	//$app['locale'] = 'fr';
 	$teams = TeamQuery::create()
 		->filterByStatus(1)
 		->find();
@@ -28,21 +29,23 @@ $app->match('/', function (Request $request) use ($app) {
 
 	$form = $app['form.factory']->createBuilder('form')
 	->add('teams', 'choice', array(
-		'label'   => 'Add teams',
+		'label'   => 'forms.add_teams',
 		'multiple' => true,
 		'choices' => $teams_array,
-		'expanded' => false
+		'expanded' => false,
+		'attr' => array(
+			'placeholder' => 'placeholders.select_teams',
+		)
 	))
 	->add('email', 'email', array(
-		'label' => 'Give your Email',
+		'label' => 'forms.give_email',
 		'required' => true,
 		'constraints' => array(
-			new Assert\NotBlank(array('message' => 'Don\'t leave blank')),
-			new Assert\Email(array('message' => 'Invalid email address'))
+			new Assert\NotBlank(array('message' => 'validators.blank')),
+			new Assert\Email(array('message' => 'validators.invalid_email'))
 		),
 		'attr' => array(
-			'placeholder' => 'email@example.com',
-			'help' => 'No spam !'
+			'placeholder' => 'placeholders.email',
 		)
 	))
 	->getForm();

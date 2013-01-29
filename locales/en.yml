@@ -1,0 +1,34 @@
+base:
+  title: Mangalerts - Free mangas and animes release alerts
+  contact: Contact Us
+  submit: Submit your Team
+  subtitle: Free manga and anime releases alerts
+  success: Success!
+  information: Information!
+  error: Error!
+  and: and
+home:
+  title1: Search for teams
+  text1: Search for the teams you want to be alerted when they post a new anime.
+  title2: Save your alerts
+  text2: Give your email and save your alerts.
+  title3: Receive emails
+  text3: Each time the team will post a new anime, you will receive an %a%email%b%.
+  form_title: Create your alerts
+  form_btn: Save
+  topten: Team top 10 <small>(Click on a team to add it)</small>
+  team_url: website
+404:
+  title: 404 Error
+contact:
+  title: Contact Us
+  lead: Send us a message, we will reply shortly.
+forms:
+    add_teams: Add teams
+    give_email: Give your Email
+placeholders:
+  email: example@domain.tld
+  select_teams: Select teams
+validators:
+  blank: Don't leave blank
+  invalid_email: Invalid email address

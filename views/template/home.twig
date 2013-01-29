@@ -4,31 +4,31 @@
     <div class="row">
         <div class="span5">
             <div class="step clearfix">
-                <i class="icon-search icon-4x icon-muted pull-left"></i> <h2>Search for teams</h2>
+                <i class="icon-search icon-4x icon-muted pull-left"></i> <h2>{{ 'home.title1'|trans }}</h2>
                 <p class="lead">
-                    Search for the teams you want to be alerted when they post a new anime.
+                    {{ 'home.text1'|trans }}
                 </p>
                 <div class="page-header"></div>
             </div>
             <div class="step clearfix">
-                <i class="icon-save icon-4x icon-muted pull-left"></i> <h2>Save your alerts</h2>
+                <i class="icon-save icon-4x icon-muted pull-left"></i> <h2>{{ 'home.title2'|trans }}</h2>
                 <p class="lead">
-                    Give your email and save your alerts.
+                    {{ 'home.text2'|trans }}
                 </p>
                 <div class="page-header"></div>
             </div>
             <div class="step clearfix">
-                <i class="icon-envelope-alt icon-4x icon-muted pull-left"></i> <h2>Receive emails</h2>
+                <i class="icon-envelope-alt icon-4x icon-muted pull-left"></i> <h2>{{ 'home.title3'|trans }}</h2>
                 <p class="lead">
-                    Each time the team will post a new anime, you will receive an <a href="#email-example" data-toggle="modal">email</a>.
+                    {{ 'home.text3'|trans({'%a%': '<a href="#email-example" data-toggle="modal">', '%b%': '</a>'}) | raw }}
                 </p>
             </div>
         </div>
         <div class="span7">
-            <h2><i class="icon-circle-arrow-right"></i> Create your alerts</h2>
+            <h2><i class="icon-circle-arrow-right"></i> {{ 'home.form_title'|trans }}</h2>
             <div class="row">
                 <div class="span3">
-                    <form action="{{ path('homepage') }}" method="post">
+                    <form novalidate action="{{ path('homepage') }}" method="post">
                         {{ form_errors(form) }}
                         {% for key,field in form if 'hidden' not in field.all['block_prefixes'] %}
                             <div class="control-group {% if field.vars.errors|length > 0 %}error{% endif %}">
@@ -65,17 +65,17 @@
                         <div class="control-group">
                             <label class="control-label"></label>
                             <div class="controls">
-                                <input class="btn btn-info" type="submit" name="submit" />
+                                <input class="btn btn-info" type="submit" name="submit" value="{{ 'home.form_btn'|trans }}" />
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="span4">
-                    <h4>Team top 10 <small>(Click on a team to add it)</small></h4>
+                    <h4>{{ 'home.topten'|trans|raw }}</h4>
                     {% if topten %}
                         <ol>
                             {% for team in topten if team.url is not empty %}
-                                <li><a href="#" attr-value="{{ team.id }}" class="topten-team"><i class="icon-plus-sign"></i> {{ team.name }}</a> (<a class="site" href="{{ team.url }}">link</a>)</li>
+                                <li><a href="#" attr-value="{{ team.id }}" class="topten-team"><i class="icon-plus-sign"></i> {{ team.name }}</a> (<a class="site" href="{{ team.url }}">{{ 'home.team_url'|trans }}</a>)</li>
                             {% endfor %}
                         </ol>
                     {% endif %}

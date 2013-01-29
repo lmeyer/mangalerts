@@ -3,6 +3,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__.'/../src/mangalerts_functions.php';
 
+use Symfony\Component\Translation\Loader\YamlFileLoader;
+
 $app = new Silex\Application();
 $env = getenv('APP_ENV') ?: 'prod';
 // Services
@@ -12,7 +14,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 	'twig.path' => __DIR__.'/../views',
 ));
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
-	'translator.messages' => array(),
+	'locale_fallback' => 'fr',
 ));
 $app->register(new Propel\Silex\PropelServiceProvider(), array(
 	'propel.config_file' => __DIR__ . '/../config/mangalerts-conf.php',
@@ -35,5 +37,14 @@ $app['swiftmailer.options'] = array(
 	'host' => $app['mailer.host'],
 	'port' => $app['mailer.port']
 );
+
+$app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+	$translator->addLoader('yaml', new YamlFileLoader());
+
+	$translator->addResource('yaml', __DIR__.'/../locales/fr.yml', 'fr');
+	$translator->addResource('yaml', __DIR__.'/../locales/en.yml', 'en');
+
+	return $translator;
+}));
 
 return $app;

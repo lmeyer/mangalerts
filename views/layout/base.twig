@@ -5,7 +5,7 @@
     <link rel="shortcut icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}
-        <title>Mangalerts - Free mangas and animes email alerts</title>
+        <title>{{ 'base.title'|trans }}</title>
     {% endblock %}
 
     {% block css %}
@@ -24,8 +24,8 @@
         <div class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-inner">
                 <ul class="nav pull-right">
-                    <li><a href="{{ path('page', {'page': 'contact'}) }}"><i class="icon-envelope-alt"></i> Contact Us</a></li>
-                    <li><a href="{{ path('team_submit') }}"><i class="icon-bookmark"></i> Submit your Team</a></li>
+                    <li><a href="{{ path('page', {'page': 'contact'}) }}"><i class="icon-envelope-alt"></i> {{ 'base.contact'|trans }}</a></li>
+                    <li><a href="{{ path('team_submit') }}"><i class="icon-bookmark"></i> {{ 'base.submit'|trans }}</a></li>
                 </ul>
             </div>
         </div>
@@ -40,27 +40,27 @@
             }(document, 'script', 'facebook-jssdk'));</script>
             <div class="hero-unit">
                 <h1><a href="{{ path('homepage') }}">Mangalerts</a></h1>
-                <h3>Free mangas and animes email alerts</h3>
+                <h3>{{ 'base.subtitle'|trans }}</h3>
             </div>
         {% endblock %}
         {% if app.session.hasFlash('success') %}
             <div class="alert alert-block alert-success">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <h4>Success!</h4>
+                <h4>{{ 'base.success'|trans }}</h4>
                 {{ app.session.flash('success') | raw  }}
             </div>
         {% endif %}
         {% if app.session.hasFlash('info') %}
             <div class="alert alert-block alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <h4>Information!</h4>
+                <h4>{{ 'base.information'|trans }}</h4>
                 {{ app.session.flash('info') | raw }}
             </div>
         {% endif %}
         {% if app.session.hasFlash('error') %}
             <div class="alert alert-block alert-error">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <h4>Information!</h4>
+                <h4>{{ 'base.error'|trans }}</h4>
                 {{ app.session.flash('error') | raw }}
             </div>
         {% endif %}
@@ -72,9 +72,9 @@
                 <div class="page-header"></div>
                 <div class="pull-right">
                     <a href="https://twitter.com/share" class="twitter-share-button" data-via="pixelcookers" data-related="moalmeyer" data-hashtags="pixelcookers">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                    <div class="fb-like" style="top: -2px" data-href="http://www.mangalerts.net" data-send="true" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+                    <div class="fb-like" style="top: -2px" data-href="http://www.mangalerts.com" data-send="true" data-layout="button_count" data-width="150" data-show-faces="false"></div>
                 </div>
-                <p>&copy; <a href="http://www.pixel-cookers.com">Pixel Cookers</a> and <a href="http://www.ludovicmeyer.com">Ludovic Meyer</a> 2013</p>
+                <p>&copy; <a href="http://www.pixel-cookers.com">Pixel Cookers</a> {{ 'base.and'|trans }} <a href="http://www.ludovicmeyer.com">Ludovic Meyer</a> 2013</p>
             </footer>
         {% endblock %}
     </div>
