@@ -1,7 +1,7 @@
 base:
   title: Mangalerts - Free mangas and animes release alerts
   contact: Contact Us
-  submit: Submit your Team
+  submit: Submit a Team
   subtitle: Free manga and anime releases alerts
   success: Success!
   information: Information!
@@ -18,17 +18,70 @@ home:
   form_btn: Save
   topten: Team top 10 <small>(Click on a team to add it)</small>
   team_url: website
+edit:
+  title: Edit alerts
+  form_btn: Save
+  delete_btn: Delete my alerts
+  confirm_title: Delete Alerts
+  confirm_content: <p>You are about to delete your alerts, this procedure is irreversible.</p><p>Do you want to proceed?</p>
+  confirm_yes: Delete
+  confirm_no: Cancel
+team:
+  title: Team Submit
+  title1: How it works
+  text1: We check regulary your rss feed to find new anime/manga release on your website. If a user subscribed to your team, he will receive an %a%email%b%.
+  title2: Why add my team ?
+  text2: Because we just help your fans, we just send an email with a link to the freshly created post!<br /><small>We don't intend to take your visits (visitors are redirected to your website when they click in the mail). We don't make money with that (no plans, no ads).</small>
+  title3: I don't want to be on mangalerts
+  text3: You are a fansub team leader, and you want to remove your website from mangalerts. What a shame :-(, but it's ok... Please use this %a%contact form%b%.
+  form_btn: Send
+block:
+  email:
+    title: Email example
+    content: |
+             <h4>New post from Mirage-Team !</h4>
+             A new post named <a target="_blank" href="http://www.mirage-team.com/Fansub-Actualite-news=804">One Piece - AOV Special Arlong Arc</a> as been published. You can go to read it by clicking on the link below.
+             <br />
+             <br />
+             -----------------------------------------------------------------
+             <br />
+             <a target="_blank" href="http://www.mirage-team.com/Fansub-Actualite-news=804">http://www.mirage-team.com/Fansub-Actualite-news=804</a>
+             <br />
+             -----------------------------------------------------------------
+             <br />
+             <br />
+             You are receiving this e-mail message because you have registered to alerts at <a href="#">www.mangalerts.com</a>
+    close_btn: Close
 404:
   title: 404 Error
 contact:
   title: Contact Us
   lead: Send us a message, we will reply shortly.
 forms:
-    add_teams: Add teams
-    give_email: Give your Email
+  add_teams: Add teams
+  give_email: Give your Email
+  the_teams: The teams
+  team_name: Team name
+  team_email: Contact Email
+  team_url: Website address
+  team_feed: Releases RSS feed
+  team_description: Little description?
 placeholders:
   email: example@domain.tld
   select_teams: Select teams
 validators:
   blank: Don't leave blank
   invalid_email: Invalid email address
+flash:
+  success:
+    alert_created: Your alerts has been successfully created! You will receive an email shortly to <strong>activate your alerts</strong>.
+    alert_deleted: Your alerts has been successfully deleted!
+    alert_activated: Your alerts has been successfully activated!
+    alert_edited: Your alerts has been successfully edited!
+    team_created: Your team has been successfully saved and will be available to users soon.
+    team_activated: The team has been activated.
+  info:
+    already_used_email: You already used this email on our website. You will <strong>shortly receive an email</strong> with a link to edit your alerts.
+  error:
+    alert_deletion: Problem during deletion!
+    alert_activation: Problem during activation!

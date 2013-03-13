@@ -1,6 +1,7 @@
 {
     "debug": true,
     "zilex.index" : "home",
+    "zilex.default_locale" : "fr",
     "database.host" : "localhost",
     "database.dbname" : "mangalerts",
     "database.user" : "root",

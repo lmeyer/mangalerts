@@ -1,7 +1,7 @@
 base:
   title: Mangalerts - Alertes emails gratuites pour les sorties mangas et animés
   contact: Contacte nous
-  submit: Soumets ta Team
+  submit: Soumets une Team
   subtitle: Alertes email gratuites pour les sorties mangas et animés
   success: Succès !
   information: Information !
@@ -14,10 +14,44 @@ home:
   text2: Indique ton email et sauvegarde tes alertes.
   title3: Reçois des emails
   text3: Chaque fois qu'une team sort un nouvel animé, tu recevras un %a%email%b%.
-  form_title: Créer tes alertes
+  form_title: Crée tes alertes
   form_btn: Sauvegarder
   topten: Top 10 des teams <small>(Clique sur une team pour l'ajouter)</small>
   team_url: site
+edit:
+  title: Edite tes alertes
+  form_btn: Sauvegarder
+  delete_btn: Supprimer mes alertes
+  confirm_title: Supprimer mes alertes
+  confirm_content: <p>Tu es sur le point de supprimer tes alertes, cette procédure est irreversible.</p><p>Es-tu sûr de vouloir faire cela ?</p>
+  confirm_yes: Supprimer
+  confirm_no: Annuler
+team:
+  title: Soumettre une Team
+  title1: Comment ça marche
+  text1: Nous vérifions régulièrement vos flux rss pour découvrir de nouvelles sorties d'anime/manga sur votre site. Si un utilisateur suit votre team, il recevra à chaque nouvelle sortie un %a%email%b%.
+  title2: Pourquoi ajouter ma team ?
+  text2: parce que nous souhaitons juste aider vos fans, nous envoyons simplement un email avec un lien vers l'article fraichement créé !<br /><small>Nous n'avons pas l'intention de vous prendre des visites (les utilsateurs sont dirigés vers votre site lorsqu'ils cliquent dans l'email). Nous ne faisons pas d'argent avec ce service (pas de pub, pas d'abonnement).</small>
+  title3: Je ne souhaite pas apparaitre sur mangalerts
+  text3: Vous êtes un leader de team de fansub et, malgré toutes nos explications, vous souhaitez enlever votre site de mangalerts.ve your website from mangalerts. C'est bien dommage :-(, mais d'accord... Envoyez nous un message via ce %a%formulaire de contact%b%.
+  form_btn: Envoyer
+block:
+  email:
+    title: Exemple d'email
+    content: |
+             <h4>New post from Mirage-Team !</h4>
+             A new post named <a target="_blank" href="http://www.mirage-team.com/Fansub-Actualite-news=804">One Piece - AOV Special Arlong Arc</a> as been published. You can go to read it by clicking on the link below.
+             <br />
+             <br />
+             -----------------------------------------------------------------
+             <br />
+             <a target="_blank" href="http://www.mirage-team.com/Fansub-Actualite-news=804">http://www.mirage-team.com/Fansub-Actualite-news=804</a>
+             <br />
+             -----------------------------------------------------------------
+             <br />
+             <br />
+             You are receiving this e-mail message because you have registered to alerts at <a href="#">www.mangalerts.com</a>
+    close_btn: Fermer
 404:
   title: Erreur 404
 contact:
@@ -26,9 +60,28 @@ contact:
 forms:
   add_teams: Ajoute des teams
   give_email: Inscris ton email
+  the_teams: Les teams
+  team_name: Nom de la Team
+  team_email: Email de Contact
+  team_url: Adresse du site
+  team_feed: Flux RSS des sorties
+  team_description: Une petite description ?
 placeholders:
   email: exemple@domaine.tld
   select_teams: Choisis des teams
 validators:
   blank: Ne laisse pas ce champ vide
   invalid_email: Adresse email invalide
+flash:
+  success:
+    alert_created: Tes alertes ont été créées avec succès ! Tu vas recevoir un email pour <strong>activer tes alertes</strong>.
+    alert_deleted: Tes alertes ont été supprimées avec succès !
+    alert_activated: Tes alertes ont été activées avec succès !
+    alert_edited: Tes alertes ont été éditées avec succès !
+    team_created: Ta team a été créée avec succès et sera bientôt disponible aux utilisateurs.
+    team_activated: La team a été activée.
+  info:
+    already_used_email: Tu as déjà utilisé cet email sur notre site. Tu vas <strong>recevoir un email</strong> avec un lien pour éditer tes alertes.
+  error:
+    alert_deletion: Problème durant la suppression !
+    alert_activation: Problème durant l'activation!

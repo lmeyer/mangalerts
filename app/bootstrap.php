@@ -14,6 +14,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 	'twig.path' => __DIR__.'/../views',
 ));
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
+	'locale' => 'fr',
 	'locale_fallback' => 'fr',
 ));
 $app->register(new Propel\Silex\PropelServiceProvider(), array(

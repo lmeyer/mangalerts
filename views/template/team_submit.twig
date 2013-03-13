@@ -3,7 +3,7 @@
 {% block content %}
     <div class="row">
         <div class="span5">
-            <h2><i class="icon-bookmark"></i> Team Submit</h2>
+            <h2><i class="icon-bookmark"></i> {{ 'team.title'|trans }}</h2>
             <form action="{{ path('team_submit') }}" method="post" class="form-horizontal">
                 {{ form_errors(form) }}
                 {% for key,field in form if 'hidden' not in field.all['block_prefixes'] %}
@@ -36,45 +36,35 @@
                             {% endif %}
                         </div>
                     </div>
-                    {% if btns[loop.index] is defined %}
-                        <div class="control-group">
-                            <label class="control-label">{{ btns[loop.index]['label'] }}</label>
-                            <div class="controls">
-                                <input type="submit" class="{{ btns[loop.index]['class'] }}" value='{{ btns[loop.index]['value'] }}' >
-                            </div>
-                        </div>
-                    {% endif %}
                 {% endfor %}
                 {{ form_rest(form) }}
                 <div class="control-group">
                     <label class="control-label"></label>
                     <div class="controls">
-                        <input class="btn btn-inverse" type="submit" name="submit" />
+                        <input class="btn btn-inverse" value="{{ 'team.form_btn'|trans }}" type="submit" name="submit" />
                     </div>
                 </div>
             </form>
         </div>
         <div class="span7">
             <div class="step clearfix">
-                <i class="icon-magic icon-4x icon-muted pull-left"></i> <h2>How it works</h2>
+                <i class="icon-magic icon-4x icon-muted pull-left"></i> <h2>{{ 'team.title1'|trans }}</h2>
                 <p class="lead">
-                    We check regulary your rss feed to find new anime/manga release on your website. If a user subscribed to your team, he will receive an <a href="#email-example" data-toggle="modal">email</a>
+                    {{ 'team.text1'|trans({'%a%': '<a href="#email-example" data-toggle="modal">', '%b%': '</a>'}) | raw }}
                 </p>
                 <div class="page-header"></div>
             </div>
             <div class="step clearfix">
-                <i class="icon-heart icon-4x icon-muted pull-left"></i> <h2>Why add my team ?</h2>
+                <i class="icon-heart icon-4x icon-muted pull-left"></i> <h2>{{ 'team.title2'|trans }}</h2>
                 <p class="lead">
-                    Because we just help your fans, we just send an email with a link to the freshly created post!
-                    <br />
-                    <small>We don't intend to take your visits (visitors are redirected to your website when they click in the mail). We don't make money with that (no plans, no ads).</small>
+                    {{ 'team.text2'|trans|raw }}
                 </p>
                 <div class="page-header"></div>
             </div>
             <div class="step clearfix">
-                <i class="icon-thumbs-down icon-4x icon-muted pull-left"></i> <h2>I don't want to be on mangalerts</h2>
+                <i class="icon-thumbs-down icon-4x icon-muted pull-left"></i> <h2>{{ 'team.title3'|trans }}</h2>
                 <p class="lead">
-                    You are a fansub team leader, and you want to remove your website from mangalerts. What a shame :-(, but it's ok... Please use this <a href="{{ path('page', {page: 'contact'}) }}">contact form</a>.
+                    {{ 'team.text3'|trans({'%a%': '<a href="/contact">', '%b%': '</a>'}) | raw }}
                 </p>
             </div>
         </div>

@@ -3,7 +3,7 @@
 //@TODO Associate mangas/animes to team
 //@TODO Search via associated animes
 //@TODO Search via description (in select2)
-//@TODO Handle better remember email
+//@TODO Associate locale to User
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +14,6 @@ $app = require __DIR__.'/bootstrap.php';
 // Controlers
 
 $app->match('/', function (Request $request) use ($app) {
-	//$app['locale'] = 'fr';
 	$teams = TeamQuery::create()
 		->filterByStatus(1)
 		->find();
@@ -85,7 +84,7 @@ $app->match('/', function (Request $request) use ($app) {
 
 				$app['mailer']->send($message);
 
-				$app['session']->setFlash('info','You already used this email on our website. You will <strong>shortly receive an email</strong> with a link to edit your alerts.');
+				$app['session']->setFlash('info',$app['translator']->trans('flash.info.already_used_email'));
 				return $app['twig']->render('template/home.twig', array(
 						'teams' => $teams,
 						'topten' => $topten,
@@ -118,7 +117,7 @@ $app->match('/', function (Request $request) use ($app) {
 
 			$app['mailer']->send($message);
 
-			$app['session']->setFlash('success','Your alerts has been successfully created! You will receive an email shortly to <strong>activate your alerts</strong>.');
+			$app['session']->setFlash('success',$app['translator']->trans('flash.success.alert_created'));
 			return $app->redirect($app['url_generator']->generate('homepage'));
 		}
 	}
@@ -141,10 +140,10 @@ $app->get('/alert/{code}/{hash}/delete', function (Request $request, $code, $has
 		->findOne();
 
 	if ($user){
-		$app['session']->setFlash('success','Your alerts has been successfully deleted!');
+		$app['session']->setFlash('success',$app['translator']->trans('flash.success.alert_deleted'));
 		$user->delete();
 	} else {
-		$app['session']->setFlash('error','Problem during deletion!');
+		$app['session']->setFlash('error',$app['translator']->trans('flash.error.alert_deletion'));
 		$app->abort(404, 'Code and hash not recognized.');
 	}
 
@@ -160,10 +159,10 @@ $app->get('/alert/{code}/{hash}/activate', function (Request $request, $code, $h
 		->findOne();
 
 	if ($user){
-		$app['session']->setFlash('success','Your alerts has been successfully activated!');
+		$app['session']->setFlash('success',$app['translator']->trans('flash.success.alert_activated'));
 		$user->activate(true);
 	} else {
-		$app['session']->setFlash('error','Problem during activation!');
+		$app['session']->setFlash('error',$app['translator']->trans('flash.error.alert_activation'));
 		$app->abort(404, 'Code and hash not recognized.');
 	}
 
@@ -210,7 +209,7 @@ $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) us
 
 	$form = $app['form.factory']->createBuilder('form')
 		->add('teams', 'choice', array(
-		'label'   => 'The teams',
+		'label'   => 'forms.the_teams',
 		'multiple' => true,
 		'choices' => $teams_array,
 		'expanded' => false
@@ -231,7 +230,7 @@ $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) us
 			$user->setTeams($propel_teams);
 			$user->save();
 
-			$app['session']->setFlash('success','Your alerts has been successfully edited!');
+			$app['session']->setFlash('success',$app['translator']->trans('flash.success.alert_edited'));
 		}
 	}
 
@@ -248,26 +247,25 @@ $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) us
 $app->match('/team/submit', function (Request $request) use ($app) {
 	$form = $app['form.factory']->createBuilder('form')
 		->add('name', 'text', array(
-		'label' => 'Team name',
+		'label' => 'forms.team_name',
 		'required' => true,
 		'constraints' => array(
-			new Assert\NotBlank(array('message' => 'Don\'t leave blank'))
+			new Assert\NotBlank(array('message' => 'validators.blank'))
 		)
 	))
 		->add('email', 'email', array(
-		'label' => 'Contact Email',
+		'label' => 'forms.team_email',
 		'required' => true,
 		'constraints' => array(
-			new Assert\NotBlank(array('message' => 'Don\'t leave blank')),
-			new Assert\Email(array('message' => 'Invalid email address'))
+			new Assert\NotBlank(array('message' => 'validators.blank')),
+			new Assert\Email(array('message' => 'validators.invalid_email'))
 		),
 		'attr' => array(
-			'placeholder' => 'email@example.com',
-			'help' => 'No spam !'
+			'placeholder' => 'placeholders.email'
 		)
 	))
 		->add('url', 'url', array(
-		'label' => 'Website address',
+		'label' => 'forms.team_url',
 		'required' => true,
 		'constraints' => array(
 			new Assert\NotBlank(array('message' => 'Don\'t leave blank')),
@@ -278,7 +276,7 @@ $app->match('/team/submit', function (Request $request) use ($app) {
 		)
 	))
 		->add('feed', 'url', array(
-		'label' => 'Releases RSS feed',
+		'label' => 'forms.team_feed',
 		'required' => true,
 		'constraints' => array(
 			new Assert\NotBlank(array('message' => 'Don\'t leave blank')),
@@ -289,7 +287,7 @@ $app->match('/team/submit', function (Request $request) use ($app) {
 		)
 	))
 		->add('description', 'textarea', array(
-		'label' => 'Little description?',
+		'label' => 'forms.team_description',
 		'required' => false
 	))
 		->getForm();
@@ -322,7 +320,7 @@ $app->match('/team/submit', function (Request $request) use ($app) {
 
 				$app['mailer']->send($message);
 
-			$app['session']->setFlash('success','Your team has been successfully saved and will be available to users soon.');
+			$app['session']->setFlash('success',$app['translator']->trans('flash.success.team_created'));
 			return $app->redirect($app['url_generator']->generate('team_submit'));
 		}
 	}
@@ -340,7 +338,7 @@ $app->match('/team/activate/{hash}', function (Request $request, $hash) use ($ap
 		$app->abort(404, 'Team not recognized.');
 	}
 	$team->activate(true);
-	$app['session']->setFlash('success','The team has been activated.');
+	$app['session']->setFlash('success',$app['translator']->trans('flash.success.team_activated'));
 	return $app->redirect($app['url_generator']->generate('homepage'));
 })
 ->bind('team_activate');

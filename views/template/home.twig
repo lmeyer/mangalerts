@@ -37,11 +37,11 @@
                                     {% set attr = field.all['attr'] %}
 
                                     {% if (attr['add-on'] is defined) and (attr['add-on'] != '') %}
-                                    <div class="input-{{ attr['add-on'] }}">
+                                        <div class="input-{{ attr['add-on'] }}">
                                         {% if (attr['add-on'] == 'prepend') and (attr['add-on-text'] != '') %}
                                             <span class="add-on">{{ attr['add-on-text'] }}</span>
                                         {% endif %}
-                                        {% endif %}
+                                    {% endif %}
 
                                         {{ form_widget(field) }}
 
@@ -51,8 +51,8 @@
                                             {% endif %}
                                         {% endif %}
 
-                                        {% if (attr['add-on'] is defined) and (attr['add-on'] != '') %}
-                                    </div>
+                                    {% if (attr['add-on'] is defined) and (attr['add-on'] != '') %}
+                                        </div>
                                     {% endif %}
 
                                     {% if attr['data-help'] is defined and attr['data-help'] is not empty %}
