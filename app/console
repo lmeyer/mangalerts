@@ -54,7 +54,7 @@ $console->register( 'refresh-rss' )
 						->setTo($app['mailer.error.receiver'])
 						->setBody($content);
 
-					$app['mailer']->send($message);
+					//$app['mailer']->send($message);
 				}
 				continue;
 			}
