@@ -43,27 +43,27 @@
                 <h3>{{ 'base.subtitle'|trans }}</h3>
             </div>
         {% endblock %}
-        {% if app.session.hasFlash('success') %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="alert alert-block alert-success">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <h4>{{ 'base.success'|trans }}</h4>
-                {{ app.session.flash('success') | raw  }}
+                {{ flashMessage.message | raw  }}
             </div>
-        {% endif %}
-        {% if app.session.hasFlash('info') %}
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('info') %}
             <div class="alert alert-block alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <h4>{{ 'base.information'|trans }}</h4>
-                {{ app.session.flash('info') | raw }}
+                {{ flashMessage.message | raw }}
             </div>
-        {% endif %}
-        {% if app.session.hasFlash('error') %}
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
             <div class="alert alert-block alert-error">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <h4>{{ 'base.error'|trans }}</h4>
-                {{ app.session.flash('error') | raw }}
+                {{ flashMessage.message | raw }}
             </div>
-        {% endif %}
+        {% endfor %}
 
 
         {% block content %}{% endblock %}

@@ -84,7 +84,12 @@ $app->match('/', function (Request $request) use ($app) {
 
 				$app['mailer']->send($message);
 
-				$app['session']->setFlash('info',$app['translator']->trans('flash.info.already_used_email'));
+                $app['session']->getFlashBag()->add(
+                  'info',
+                  array(
+                    'message' => $app['translator']->trans('flash.info.already_used_email'),
+                  )
+                );
 				return $app['twig']->render('template/home.twig', array(
 						'teams' => $teams,
 						'topten' => $topten,
@@ -117,7 +122,12 @@ $app->match('/', function (Request $request) use ($app) {
 
 			$app['mailer']->send($message);
 
-			$app['session']->setFlash('success',$app['translator']->trans('flash.success.alert_created'));
+            $app['session']->getFlashBag()->add(
+              'info',
+              array(
+                'message' => $app['translator']->trans('flash.success.alert_created'),
+              )
+            );
 			return $app->redirect($app['url_generator']->generate('homepage'));
 		}
 	}
@@ -140,10 +150,20 @@ $app->get('/alert/{code}/{hash}/delete', function (Request $request, $code, $has
 		->findOne();
 
 	if ($user){
-		$app['session']->setFlash('success',$app['translator']->trans('flash.success.alert_deleted'));
+        $app['session']->getFlashBag()->add(
+          'info',
+          array(
+            'message' => $app['translator']->trans('flash.success.alert_deleted'),
+          )
+        );
 		$user->delete();
 	} else {
-		$app['session']->setFlash('error',$app['translator']->trans('flash.error.alert_deletion'));
+        $app['session']->getFlashBag()->add(
+          'info',
+          array(
+            'message' => $app['translator']->trans('flash.error.alert_deletion'),
+          )
+        );
 		$app->abort(404, 'Code and hash not recognized.');
 	}
 
@@ -159,10 +179,20 @@ $app->get('/alert/{code}/{hash}/activate', function (Request $request, $code, $h
 		->findOne();
 
 	if ($user){
-		$app['session']->setFlash('success',$app['translator']->trans('flash.success.alert_activated'));
+        $app['session']->getFlashBag()->add(
+          'info',
+          array(
+            'message' => $app['translator']->trans('flash.success.alert_activated'),
+          )
+        );
 		$user->activate(true);
 	} else {
-		$app['session']->setFlash('error',$app['translator']->trans('flash.error.alert_activation'));
+        $app['session']->getFlashBag()->add(
+          'info',
+          array(
+            'message' => $app['translator']->trans('flash.error.alert_activation'),
+          )
+        );
 		$app->abort(404, 'Code and hash not recognized.');
 	}
 
@@ -230,7 +260,12 @@ $app->match('/alert/{code}/{hash}', function (Request $request, $code, $hash) us
 			$user->setTeams($propel_teams);
 			$user->save();
 
-			$app['session']->setFlash('success',$app['translator']->trans('flash.success.alert_edited'));
+            $app['session']->getFlashBag()->add(
+              'info',
+              array(
+                'message' => $app['translator']->trans('flash.success.alert_edited'),
+              )
+            );
 		}
 	}
 
@@ -320,7 +355,12 @@ $app->match('/team/submit', function (Request $request) use ($app) {
 
 				$app['mailer']->send($message);
 
-			$app['session']->setFlash('success',$app['translator']->trans('flash.success.team_created'));
+            $app['session']->getFlashBag()->add(
+              'info',
+              array(
+                'message' => $app['translator']->trans('flash.success.team_created'),
+              )
+            );
 			return $app->redirect($app['url_generator']->generate('team_submit'));
 		}
 	}
@@ -338,7 +378,12 @@ $app->match('/team/activate/{hash}', function (Request $request, $hash) use ($ap
 		$app->abort(404, 'Team not recognized.');
 	}
 	$team->activate(true);
-	$app['session']->setFlash('success',$app['translator']->trans('flash.success.team_activated'));
+    $app['session']->getFlashBag()->add(
+      'info',
+      array(
+        'message' => $app['translator']->trans('flash.success.team_activated'),
+      )
+    );
 	return $app->redirect($app['url_generator']->generate('homepage'));
 })
 ->bind('team_activate');
